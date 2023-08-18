@@ -10,7 +10,3 @@ export const db = factory({
     city: faker.string.sample,
   },
 });
-
-for (let index = 0; index < 10; index++) {
-  db.user.create();
-}

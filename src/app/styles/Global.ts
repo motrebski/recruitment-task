@@ -6,7 +6,8 @@ export const Button = styled.button<{ $color?: string; $background?: string; $bo
   font-size: 1em;
   padding: 0.25em 1em;
   border: ${props => props.$border || "none"};
-  border-radius: 3px;  
+  border-radius: 3px;
+  cursor: pointer;
 `;
 
 export const Card = styled.div`
@@ -100,6 +101,9 @@ export const Th = styled.th`
   font-weight: normal;
   padding-left: 0.625rem;
   padding-right: 0.625rem;
+  &:nth-of-type(3) {
+    cursor: pointer;
+  }
 `;
 
 export const ModalContainer = styled.div`

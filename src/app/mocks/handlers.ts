@@ -11,25 +11,45 @@ export const handlers = [
     }
   ),
 
-  rest.post<Omit<User, 'id'>, PathParams, User>(`${URL_NAME}/users`, (req, res, ctx) => {
-    const add = db.user.create(req.body);
-    return res(ctx.json(add));
-  }),
-
-  rest.delete<any, any, { id: string }>(
+  rest.get<DefaultBodyType, PathParams, User[]>(
     `${URL_NAME}/users/:id`,
-    (req, res, ctx) => {
-
+    (_req, res, ctx) => {
       const user = db.user.findFirst({
         where: {
           id: {
-            equals: req.params.id,
+            equals: parseInt(_req.params.id as any),
+          },
+        },
+      });
+      return res(ctx.json(user as any));
+    }
+  ),
+
+  rest.post<Omit<User, 'id'>, PathParams, User>(`${URL_NAME}/users`, (req, res, ctx) => {
+    const add = db.user.create(JSON.parse(req.body as any));
+    return res(ctx.json(add));
+  }),
+
+  rest.put<any, { id: any }, User>(`${URL_NAME}/users/:id`, (req, res, ctx) => {
+    const updated = db.user.update({
+      where: { id: { equals: parseInt(req.params.id) } },
+      data: JSON.parse(req.body as any),
+    });
+    return res(ctx.json(updated!));
+  }),
+
+  rest.delete<any, any, { id: any }>(
+    `${URL_NAME}/users/:id`,
+    (req, res, ctx) => {
+      const user = db.user.findFirst({
+        where: {
+          id: {
+            equals: parseInt(req.params.id),
           },
         },
       });
 
       if (!user) {
-        // if there is no user 404
         return res(ctx.status(404));
       }
 
@@ -41,7 +61,6 @@ export const handlers = [
         },
       });
 
-      // user deleted 200
       return res(ctx.status(200));
     }
   ),

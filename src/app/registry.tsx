@@ -10,8 +10,8 @@ export default function StyledComponentsRegistry({
   children: React.ReactNode
 }) {
   if (process.env.NODE_ENV === "development") {
-    //const { worker } = require("../app/mocks/browser");
-    //worker.start();
+    const { worker } = require("../app/mocks/browser");
+    worker.start();
   }
   // Only create stylesheet once with lazy initial state
   // x-ref: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
