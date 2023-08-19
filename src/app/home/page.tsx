@@ -1,24 +1,32 @@
 "use client";
 
 import React, { useEffect } from 'react'
-import { Title, Button, Card, Header, Table, Td, Th, Tr, TableContainer } from "@/app/styles/Global";
+import { Title, Button, Card, Error, Header, Table, Td, Th, Tr, TableContainer } from "@/app/styles/Global";
 import Link from 'next/link';
 import Modal from "@/app/components/Modal";
 import { selectModalState, setModalState, setModalUser } from "@/app/store/slices/modalSlice";
 import { setUsersData, setFetchingUsersState, selectUsersData, selectFetchingUsersState } from "@/app/store/slices/usersSlice";
 import { getUsers } from "@/app/api/user";
 import { useDispatch, useSelector } from "react-redux";
+import Image from 'next/image';
 
 export default function Home() {
 
   const modalState = useSelector(selectModalState);
   const usersData = useSelector(selectUsersData);
   const loadingState = useSelector(selectFetchingUsersState);
-  //const usersData = [{id: 1, name: 'dd', username: 'zz', email: 'rr', city: 'ww'}, {id: 1, name: 'dd', username: 'rr', email: 'rr', city: 'ww'}];
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchUsers();
+    if (process.env.NODE_ENV === "development") {
+      const { worker } = require("@/app/mocks/browser");
+      worker.start();
+    }
+    if (usersData.length === 0) {
+      fetchUsers();
+    }
+    
+    // eslint-disable-next-line
   }, []);
 
   const fetchUsers = async () => {
@@ -41,7 +49,13 @@ export default function Home() {
   return (
     <Card>
       {(loadingState === 'loading') && (
-        <div>Loading</div>
+        <Image
+          src="/loading.png"
+          width={50}
+          height={50}
+          alt="Loading"
+          style={{display: "block", margin: "auto"}}
+        />
       )}
       {(loadingState === 'done') && (
       <React.Fragment>
@@ -85,6 +99,9 @@ export default function Home() {
               ))}
             </tbody>
           </Table>
+          {(usersData.length === 0) && (
+            <Error>There is no data</Error>
+          )}
         </TableContainer>
         {modalState &&
           (<Modal>Do you want to cancel user: </Modal>)
@@ -92,7 +109,7 @@ export default function Home() {
       </React.Fragment>
       )}
       {(loadingState === 'error') && (
-        <div>Error</div>
+        <Error>Something is wrong, please refresh page</Error>
       )}
     </Card>
   )

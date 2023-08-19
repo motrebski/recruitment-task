@@ -16,6 +16,13 @@ export const Card = styled.div`
   border-radius: 3px;
 `;
 
+export const Error = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+`;
+
 export const Title = styled.div<{ $fontSize?: string }>`
   font-size: ${props => props.$fontSize || "x-large"};
   font-weight: bold;
@@ -33,10 +40,14 @@ export const FieldContainer = styled.div`
   display: flex;
   padding-top: 1.25rem;
   paddin-bottom: 1.25rem;
+  align-items: center;
 `;
 
 export const Input = styled.input`
   width: 100%;
+  height: 1.35rem;
+  border: 1px solid #d7d6d6ff;
+  border-radius: 3px;
 `;
 
 export const Label = styled.label`
@@ -69,6 +80,13 @@ export const FormContainer = styled.div`
 export const FormErrorField = styled.span`
   color: red;
   font-size: small;
+  }
+`;
+
+export const FormStatusMessage = styled.div<{ $color?: string }>`
+  color: ${props => props.$color || "black"};
+  padding-bottom: 1.25rem;
+  padding-left: 1.25rem;
   }
 `;
 

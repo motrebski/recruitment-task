@@ -34,7 +34,9 @@ export const addUser = async (user: any): Promise<void> => {
     body: JSON.stringify(user),
   });
 
-  if (!response.ok) {
+  if (response.ok) {
+    return response.json();
+  } else {
     throw new Error("Error if add user");
   }
 };
@@ -45,7 +47,9 @@ export const editUser = async (user: any, id: number): Promise<void> => {
     body: JSON.stringify(user),
   });
 
-  if (!response.ok) {
+  if (response.ok) {
+    return response.json();
+  } else {
     throw new Error("Error if edit user");
   }
 };

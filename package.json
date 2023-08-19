@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -28,6 +29,7 @@
     "@faker-js/faker": "^8.0.2",
     "@mswjs/data": "^0.13.0",
     "@types/faker": "^6.6.9",
+    "cypress": "^12.17.4",
     "msw": "^1.2.3"
   },
   "msw": {
