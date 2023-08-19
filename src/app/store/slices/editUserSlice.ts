@@ -11,7 +11,7 @@ export interface EditUserState {
 
 const initialState: EditUserState = {
   editUserData: {},
-  fetchingUserState: 'loading',
+  fetchingUserState: '',
   submitFormStatus: '',
 };
 

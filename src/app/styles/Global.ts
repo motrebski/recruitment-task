@@ -58,11 +58,12 @@ export const Form = styled.form`
   padding: 1.25rem;
 `;
 
-export const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div<{ $paddingRight?: string }>`
   display: flex;
   justify-content: end;
   gap: 0.75rem;
   padding: 1.25rem;
+  padding-right: ${props => props.$paddingRight || "1.25rem"};
 `;
 
 export const FormContainer = styled.div`

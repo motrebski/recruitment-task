@@ -69,6 +69,7 @@ export default function Edit({ params }: { params: { id: string } }) {
 
   const editUserData = async (data: any) => {
     try {
+      //update user list store
       const updatedUser = await editUser({...userData, ...data}, userData["id"]);
       let usersDataToUpdate: any = [...usersData];
       [updatedUser].forEach((userItem: any) => {
@@ -135,7 +136,7 @@ export default function Edit({ params }: { params: { id: string } }) {
                 <Input {...register("city", { required: "Required field"})} />
               </FieldContainer>
               {errors.city && <FormErrorField>{errors.city.message}</FormErrorField>}
-              <ButtonContainer>
+              <ButtonContainer $paddingRight="0">
               <Link href="/home"><Button $color="#e8241aff" $border="1px solid #e8241aff" >Cancel</Button></Link>
               <Button $background="#11b524" >Submit</Button>
               </ButtonContainer>

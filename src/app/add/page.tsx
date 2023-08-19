@@ -41,6 +41,10 @@ export default function Add() {
   });
 
   useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      const { worker } = require("@/app/mocks/browser");
+      worker.start();
+    }
     return () => {
       dispatch(setSubmitFormStatus(''));
     };
@@ -49,6 +53,7 @@ export default function Add() {
 
   const addNewUser = async (data: any) => {
     try {
+      //update user list store
       const user: any = await addUser(data);
       const usersDataToAdd = [...usersData];
       usersDataToAdd.push(user);
@@ -97,7 +102,7 @@ export default function Add() {
             <Input {...register("city", { required: "Required field"})} />
           </FieldContainer>
           {errors.city && <FormErrorField>{errors.city.message}</FormErrorField>}
-          <ButtonContainer>
+          <ButtonContainer $paddingRight="0">
           <Link href="/home"><Button $color="#e8241aff" $border="1px solid #e8241aff" >Cancel</Button></Link>
           <Button $background="#11b524" >Submit</Button>
           </ButtonContainer>

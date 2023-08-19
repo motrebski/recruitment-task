@@ -10,7 +10,7 @@ export interface UsersState {
 
 const initialState: UsersState = {
   usersData: [],
-  fetchingUsersState: 'loading',
+  fetchingUsersState: '',
 };
 
 export const usersSlice = createSlice({

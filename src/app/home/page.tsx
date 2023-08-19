@@ -22,24 +22,30 @@ export default function Home() {
       const { worker } = require("@/app/mocks/browser");
       worker.start();
     }
-    if (usersData.length === 0) {
-      fetchUsers();
-    }
     
+    fetchUsers();
+
+    return () => {
+      dispatch(setFetchingUsersState(''));
+    };
     // eslint-disable-next-line
   }, []);
 
   const fetchUsers = async () => {
-    dispatch(setFetchingUsersState('loading'));
-    try {
-      const users = await getUsers();
-      dispatch(setUsersData(users));
+    if (usersData.length === 0) {
+      dispatch(setFetchingUsersState('loading'));
+      try {
+        const users = await getUsers();
+        dispatch(setUsersData(users));
+        dispatch(setFetchingUsersState('done'));
+      } catch (error) {
+        dispatch(setFetchingUsersState('error'));
+      }
+    } else {
       dispatch(setFetchingUsersState('done'));
-    } catch (error) {
-      dispatch(setFetchingUsersState('error'));
     }
-  }
 
+  }
   const sortByUsername = () => {
     const usersDataToSort = [...usersData];
     usersDataToSort.sort((a: any, b: any) => a.username > b.username ? 1 : -1);
